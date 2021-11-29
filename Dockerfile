@@ -17,7 +17,6 @@ ENV     FFMPEG_VERSION=4.3.2 \
         OPENCOREAMR_VERSION=0.1.5 \
         OPUS_VERSION=1.2 \
         OPENJPEG_VERSION=2.1.2 \
-        THEORA_VERSION=1.1.1 \
         VORBIS_VERSION=1.3.5 \
         VPX_VERSION=1.8.0 \
         WEBP_VERSION=1.0.2 \
@@ -35,7 +34,6 @@ ARG         FRIBIDI_SHA256SUM="3fc96fa9473bd31dcb5500bdf1aa78b337ba13eb8c301e7c2
 ARG         LIBVIDSTAB_SHA256SUM="14d2a053e56edad4f397be0cb3ef8eb1ec3150404ce99a426c4eb641861dc0bb v1.1.0.tar.gz"
 ARG         OGG_SHA256SUM="e19ee34711d7af328cb26287f4137e70630e7261b17cbe3cd41011d73a654692 libogg-1.3.2.tar.gz"
 ARG         OPUS_SHA256SUM="77db45a87b51578fbc49555ef1b10926179861d854eb2613207dc79d9ec0a9a9 opus-1.2.tar.gz"
-ARG         THEORA_SHA256SUM="40952956c47811928d1e7922cda3bc1f427eb75680c3c37249c91e949054916b libtheora-1.1.1.tar.gz"
 ARG         VORBIS_SHA256SUM="6efbcecdd3e5dfbf090341b485da9d176eb250d893e3eb378c428a2db38301ce libvorbis-1.3.5.tar.gz"
 ARG         XVID_SHA256SUM="4e9fd62728885855bc5007fe1be58df42e5e274497591fec37249e1052ae316f xvidcore-1.3.4.tar.gz"
 
@@ -146,20 +144,7 @@ RUN \
         make -j $(nproc) && \
         make -j $(nproc) install && \
         rm -rf ${DIR}
-### libtheora http://www.theora.org/
-RUN \
-        DIR=/tmp/theora && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO http://downloads.xiph.org/releases/theora/libtheora-${THEORA_VERSION}.tar.gz && \
-        echo ${THEORA_SHA256SUM} | sha256sum --check && \
-        tar -zx --strip-components=1 -f libtheora-${THEORA_VERSION}.tar.gz && \
-        curl -sL 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' -o config.guess && \
-        curl -sL 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD' -o config.sub && \
-        ./configure --prefix="${PREFIX}" --with-ogg="${PREFIX}" --enable-shared && \
-        make -j $(nproc) && \
-        make -j $(nproc) install && \
-        rm -rf ${DIR}
+
 ### libvpx https://www.webmproject.org/code/
 RUN \
         DIR=/tmp/vpx && \
@@ -407,7 +392,6 @@ RUN ./configure \
         --enable-libvidstab \
         --enable-libmp3lame \
         --enable-libopus \
-        --enable-libtheora \
         --enable-libvorbis \
         --enable-libvpx \
         --enable-libwebp \
