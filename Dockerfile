@@ -444,10 +444,4 @@ COPY --from=build /build/ffmpeg/ffmpeg /usr/bin
 COPY --from=build /build/ffmpeg/ffprobe /usr/bin
 RUN ln /usr/lib/libnvmpi.so.1.0.0 /usr/lib/libnvmpi.so
 
-RUN \
-        apt-get -yqq update && \
-        apt-get install -yq --no-install-recommends libx265-dev libaom-dev && \
-        apt-get autoremove -y && \
-        apt-get clean -y
-
 CMD [ "/bin/bash" ]
