@@ -3,7 +3,6 @@ COPY . /build
 RUN apt-get update && apt-get -y --autoremove install build-essential git libass-dev cmake
 
 ENV     FFMPEG_VERSION=4.3.2 \
-        AOM_VERSION=v1.0.0 \
         FDKAAC_VERSION=0.1.5 \
         FREETYPE_VERSION=2.5.5 \
         FRIBIDI_VERSION=0.19.7 \
@@ -69,7 +68,6 @@ RUN     buildDeps="autoconf \
         linux-headers-raspi2 \
         libomxil-bellagio-dev \
         libx265-dev \
-        libaom-dev \
         zlib1g-dev" && \
         apt-get -yqq update && \
         apt-get install -yq --no-install-recommends ${buildDeps}
@@ -426,7 +424,6 @@ RUN ./configure \
         --prefix="${PREFIX}" \
         --enable-libopenjpeg \
         --enable-libkvazaar \
-        --enable-libaom \
         --extra-libs=-lpthread \
         --enable-omx \
         --enable-omx-rpi \
